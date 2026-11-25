@@ -5,6 +5,7 @@ install(FILES ${EXAGA_HEADERS} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
 add_library(ExaCA-Analysis ${EXAGA_SOURCES})
 add_library(ExaCA::Analysis ALIAS ExaCA-Analysis)
+exaca_set_kokkos_language(ExaCA-Analysis)
 
 target_link_libraries(ExaCA-Analysis PUBLIC ExaCA-Core)
 

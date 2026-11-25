@@ -10,6 +10,7 @@ install(FILES ${CMAKE_CURRENT_BINARY_DIR}/CAconfig.hpp
 
 add_library(ExaCA-Core ${EXACA_SOURCES})
 add_library(ExaCA::Core ALIAS ExaCA-Core)
+exaca_set_kokkos_language(ExaCA-Core)
 
 target_link_libraries(ExaCA-Core PUBLIC MPI::MPI_CXX Kokkos::kokkos
                                         nlohmann_json::nlohmann_json)
