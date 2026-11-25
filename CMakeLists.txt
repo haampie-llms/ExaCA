@@ -15,6 +15,23 @@ if(ExaCA_REQUIRE_FINCH OR Finch_FOUND)
 endif()
 
 find_package(Kokkos 4.0 REQUIRED)
+
+# With Kokkos_ENABLE_COMPILE_AS_CMAKE_LANGUAGE, sources that include Kokkos are
+# compiled with the language Kokkos was built for (CUDA or HIP).
+if(Kokkos_COMPILE_LANGUAGE AND NOT Kokkos_COMPILE_LANGUAGE STREQUAL CXX)
+  set(CMAKE_${Kokkos_COMPILE_LANGUAGE}_ARCHITECTURES
+      ${Kokkos_${Kokkos_COMPILE_LANGUAGE}_ARCHITECTURES})
+  enable_language(${Kokkos_COMPILE_LANGUAGE})
+endif()
+
+function(exaca_set_kokkos_language target)
+  if(Kokkos_COMPILE_LANGUAGE AND NOT Kokkos_COMPILE_LANGUAGE STREQUAL CXX)
+    get_target_property(_sources ${target} SOURCES)
+    set_source_files_properties(${_sources}
+                                PROPERTIES LANGUAGE ${Kokkos_COMPILE_LANGUAGE})
+  endif()
+endfunction()
+
 find_package(MPI REQUIRED)
 
 if(${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.24")

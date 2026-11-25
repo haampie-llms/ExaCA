@@ -32,6 +32,7 @@ macro(ExaCA_add_tests)
                                                     ${CMAKE_CURRENT_SOURCE_DIR})
       target_link_libraries(${_target} ${EXACA_UNIT_TEST_PACKAGE}
                             ${gtest_target})
+      exaca_set_kokkos_language(${_target})
 
       foreach(_np ${EXACA_UNIT_TEST_MPIEXEC_NUMPROCS})
         if(_device STREQUAL THREADS OR _device STREQUAL OPENMP)
